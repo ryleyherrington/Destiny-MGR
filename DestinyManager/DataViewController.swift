@@ -16,8 +16,8 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     var type: String?
     var topItems = [String]()
     var bottomItems = [String]()
-    var activities = [NSManagedObject]()
-//    var completedActivities = [Activity]()
+    var activities = [Activity]()
+    var completedActivities = [Activity]()
     
     let greenColor  = UIColor (red: 51.0/255.0, green: 102.0/255.0, blue: 0.0/255.0, alpha: 1)
     let orangeColor = UIColor (red: 255.0/255.0, green: 153.0/255.0, blue: 0.0/255.0, alpha: 1)
@@ -28,12 +28,11 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         
         // Do any additional setup after loading the view, typically from a nib.
         if type != nil {
-            println("IN DATA \(type)")
+           // println("IN DATA \(type)")
             
             //initialize
             topItems = []
             bottomItems = []
-            println("IN DATA \(type)")
             
             if type == "WEEKLY" {
                 topItems = [
@@ -120,17 +119,14 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         
         //3
         var error: NSError?
-        let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [NSManagedObject]
+        let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [Activity]
        
-        
         if let results = fetchedResults {
             println("fetched Results:\(results)")
-         //   completedActivities  = results
-         //   println("\(completedActivities)")
             
-          //  for activity: Activity in completedActivities {
-          //      println("activity:\(activity)")
-          //  }
+            for activity: Activity in results {
+                    println("activity:\(activity.character)")
+            }
 
         } else {
             println("Could not fetch \(error), \(error!.userInfo)")
@@ -171,21 +167,21 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         let subHeight = cell.frame.size.height/3
         
         var leftButton=CellButton(frame: CGRectMake(0, cell.frame.size.height-subHeight, cell.frame.size.width/3, subHeight))
-        leftButton.indexPath = indexPath
+        leftButton.indexPath = "\(indexPath.section), \(indexPath.row) "
         leftButton.cellName = cell.textLabel.text
         leftButton.backgroundColor = greenColor
         leftButton.addTarget(self, action: "leftButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(leftButton)
         
         var middleButton=CellButton(frame: CGRectMake(cell.frame.size.width/3, cell.frame.size.height-subHeight, cell.frame.size.width/3, subHeight))
-        middleButton.indexPath = indexPath
+        middleButton.indexPath = "\(indexPath.section), \(indexPath.row) "
         middleButton.cellName = cell.textLabel.text!
         middleButton.backgroundColor = orangeColor
         middleButton.addTarget(self, action: "middleButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(middleButton)
         
         var rightButton=CellButton(frame: CGRectMake(cell.frame.size.width/3*2, cell.frame.size.height-subHeight, cell.frame.size.width/3, subHeight))
-        rightButton.indexPath = indexPath
+        rightButton.indexPath = "\(indexPath.section), \(indexPath.row) "
         rightButton.cellName = cell.textLabel.text!
         rightButton.backgroundColor = yellowColor
         rightButton.addTarget(self, action: "rightButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -207,10 +203,10 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         var button:CellButton = sender
         if (button.backgroundColor == UIColor .blackColor()){
             button.backgroundColor = greenColor
-            buttonPressed("LEFT", on: "NO", cell:button.cellName)
+            buttonPressed("LEFT", on: "NO", cell:button.cellName, path:button.indexPath)
         } else{
             button.backgroundColor = UIColor .blackColor()
-            buttonPressed("LEFT", on: "YES", cell:button.cellName)
+            buttonPressed("LEFT", on: "YES", cell:button.cellName, path:button.indexPath)
         }
     }
     
@@ -218,10 +214,10 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         var button:CellButton = sender
         if (button.backgroundColor == UIColor .blackColor()){
             button.backgroundColor = orangeColor
-            buttonPressed("MIDDLE", on: "NO", cell:button.cellName)
+            buttonPressed("MIDDLE", on: "NO", cell:button.cellName, path:button.indexPath)
         } else{
             button.backgroundColor = UIColor .blackColor()
-            buttonPressed("MIDDLE", on: "YES", cell:button.cellName)
+            buttonPressed("MIDDLE", on: "YES", cell:button.cellName, path:button.indexPath)
         }
     }
     
@@ -229,16 +225,17 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         var button:CellButton = sender
         if (button.backgroundColor == UIColor .blackColor()){
             button.backgroundColor = yellowColor
-            buttonPressed("RIGHT", on: "NO", cell:button.cellName)
+            buttonPressed("RIGHT", on: "NO", cell:button.cellName, path:button.indexPath)
         } else{
             button.backgroundColor = UIColor .blackColor()
-            buttonPressed("RIGHT", on: "YES", cell:button.cellName)
+            buttonPressed("RIGHT", on: "YES", cell:button.cellName, path:button.indexPath)
         }
     }
     
     
-    func buttonPressed(button: NSString, on: NSString, cell:NSString) {
-        //println("HEY WE PRESSED \(button), it's completed =\(on) in \(cell)")
+    func buttonPressed(button: NSString, on: NSString, cell:NSString, path:NSString) {
+        
+        //1 get references
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         
         let managedContext = appDelegate.managedObjectContext!
@@ -246,12 +243,13 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         //2
         let entity =  NSEntityDescription.entityForName("Activity", inManagedObjectContext: managedContext)
         
-        let activity = NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
+        let activity = NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext) as Activity
         
         //3
         activity.setValue(cell, forKey: "name")
         activity.setValue(button, forKey:"character")
         activity.setValue(on, forKey:"finished")
+        activity.setValue(path, forKey:"indexPath")
         
         
         //4
@@ -263,7 +261,6 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         activities.append(activity)
         
     }
-   
     
 }
 

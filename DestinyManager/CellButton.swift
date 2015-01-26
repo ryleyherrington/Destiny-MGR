@@ -10,6 +10,6 @@ import UIKit
 
 class CellButton: UIButton {
     var cellName:String!
-    var indexPath:NSIndexPath!
+    var indexPath:NSString!
     
 }

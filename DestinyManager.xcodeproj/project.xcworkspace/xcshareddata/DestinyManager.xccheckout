@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>592005FA-6D61-47B5-A473-1F53AC6B238B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DestinyManager</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8EF8CE189D600683A9BEEB109564678652F4C8AF</key>
+		<string>https://github.com/ryleyherrington/Destiny-MGR.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>DestinyManager.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8EF8CE189D600683A9BEEB109564678652F4C8AF</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ryleyherrington/Destiny-MGR.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8EF8CE189D600683A9BEEB109564678652F4C8AF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8EF8CE189D600683A9BEEB109564678652F4C8AF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Destiny-MGR</string>
+		</dict>
+	</array>
+</dict>
+</plist>
