@@ -12,5 +12,5 @@ class CellButton: UIButton {
     var cellName:String!
     var row:Int!
     var section:Int!
-    
+   
 }

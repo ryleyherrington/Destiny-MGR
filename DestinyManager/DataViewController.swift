@@ -21,7 +21,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     let greenColor  = UIColor (red: 51.0/255.0, green: 102.0/255.0, blue: 0.0/255.0, alpha: 1)
     let orangeColor = UIColor (red: 255.0/255.0, green: 153.0/255.0, blue: 0.0/255.0, alpha: 1)
     let yellowColor = UIColor (red: 255.0/255.0, green: 204.0/255.0, blue: 0.0/255.0, alpha: 1)
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -105,7 +105,11 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         collectionView!.registerClass(BaseCollectionViewCell.self, forCellWithReuseIdentifier: "BaseCollectionViewCell")
         collectionView!.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(collectionView!)
+        
+//        var b = UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: Selector("getActivities"))
+//        self.navigationItem.rightBarButtonItem = b
         getActivities()
+
     }
    
     func getActivities(){
@@ -124,16 +128,22 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         if let results = fetchedResults {
             //println("fetched Results:\(results)")
             for activity: Activity in results {
-                println("activity:\(activity.character)")
+//                println("activity:\(activity.character)")
+                
                 let row:Int = Int(activity.row)
                 let section:Int = Int(activity.section)
-//                let ip = NSIndexPath(forRow: Int(activity.row), inSection: Int(activity.section))
-                let ip = NSIndexPath(forRow: row, inSection: section)
+                let ip = NSIndexPath(forRow: Int(activity.row), inSection: Int(activity.section))
                 
-//                let cell:BaseCollectionViewCell = collectionView(collectionView, cellForItemAtIndexPath:ip)
-                if activity.character == "LEFT" {
- //                   cell.leftButton.backgroundColor = UIColor.blackColor()
-                }
+                //let cell = self.collectionView!.cellForItemAtIndexPath(ip) as BaseCollectionViewCell {
+                let cell = collectionView(self.collectionView!, cellForItemAtIndexPath:ip) as BaseCollectionViewCell
+                    if activity.character == "LEFT" {
+                        if cell.leftButton != nil {
+                            println("Cell = \(cell) \n")
+                            println ("LeftCell:\(cell.leftButton.backgroundColor)")
+                            self.collectionView!.reloadItemsAtIndexPaths([ip])
+                            leftButtonAction(cell.leftButton)
+                        }
+                    }
             }
 
         } else {
@@ -166,37 +176,20 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
             cell.textLabel.text = self.bottomItems[indexPath.row]
         }
         
-        cell.textLabel?.textColor = UIColor.whiteColor()
+        cell.leftButton.row = indexPath.row
+        cell.leftButton.section = indexPath.section
+        cell.leftButton.cellName = cell.textLabel.text
+        cell.leftButton.addTarget(self, action: "leftButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
         
-        let subHeight = cell.frame.size.height/3
+        cell.middleButton.row = indexPath.row
+        cell.middleButton.section = indexPath.section
+        cell.middleButton.cellName = cell.textLabel.text!
+        cell.middleButton.addTarget(self, action: "middleButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
         
-        let leftButton = cell.leftButton
-  //      leftButton=CellButton(frame: CGRectMake(0, cell.frame.size.height-subHeight, cell.frame.size.width/3, subHeight))
-        leftButton.row = indexPath.row
-        leftButton.section = indexPath.section
-        leftButton.cellName = cell.textLabel.text
-        leftButton.backgroundColor = greenColor
-        leftButton.addTarget(self, action: "leftButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
-        cell.addSubview(leftButton)
-        
-        let middleButton = cell.middleButton
- //       middleButton=CellButton(frame: CGRectMake(cell.frame.size.width/3, cell.frame.size.height-subHeight, cell.frame.size.width/3, subHeight))
-        middleButton.row = indexPath.row
-        middleButton.section = indexPath.section
-        middleButton.cellName = cell.textLabel.text!
-        middleButton.backgroundColor = orangeColor
-        middleButton.addTarget(self, action: "middleButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
-        cell.addSubview(middleButton)
-        
-        
-        let rightButton = cell.rightButton
-//        rightButton=CellButton(frame: CGRectMake(cell.frame.size.width/3*2, cell.frame.size.height-subHeight, cell.frame.size.width/3, subHeight))
-        rightButton.row = indexPath.row
-        rightButton.section = indexPath.section 
-        rightButton.cellName = cell.textLabel.text!
-        rightButton.backgroundColor = yellowColor
-        rightButton.addTarget(self, action: "rightButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
-        cell.addSubview(rightButton)
+        cell.rightButton.row = indexPath.row
+        cell.rightButton.section = indexPath.section
+        cell.rightButton.cellName = cell.textLabel.text!
+        cell.rightButton.addTarget(self, action: "rightButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
         
         return cell
     }
