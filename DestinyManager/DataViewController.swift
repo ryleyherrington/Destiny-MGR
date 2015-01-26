@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class DataViewController: UIViewController , UICollectionViewDelegate, UICollectionViewDataSource{
-   
+  
     var collectionView: UICollectionView?
     var dataObject: AnyObject?
     var type: String?
@@ -140,10 +140,12 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         for activity: Activity in completedActivities {
             if Int(activity.row) == ip.row && Int(activity.section) == ip.section {
                 if activity.name == cell.textLabel.text{
-                    if activity.character == "LEFT" {
-                        if cell.leftButton != nil {
-                            cell.leftButton.backgroundColor = UIColor.blackColor()
-                        }
+                    if activity.character == "LEFT" && cell.leftButton != nil  && activity.finished=="YES" {
+                        cell.leftButton.backgroundColor = UIColor.blackColor()
+                    }else if activity.character == "MIDDLE" && cell.middleButton != nil  && activity.finished=="YES" {
+                        cell.middleButton.backgroundColor = UIColor.blackColor()
+                    }else if activity.character == "RIGHT" && cell.rightButton != nil  && activity.finished=="YES" {
+                        cell.rightButton.backgroundColor = UIColor.blackColor()
                     }
                 }
             }
