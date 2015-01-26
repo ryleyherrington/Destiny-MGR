@@ -17,6 +17,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     var topItems = [String]()
     var bottomItems = [String]()
     var activities = [Activity]()
+    var completedActivities = [Activity]()
     
     let greenColor  = UIColor (red: 51.0/255.0, green: 102.0/255.0, blue: 0.0/255.0, alpha: 1)
     let orangeColor = UIColor (red: 255.0/255.0, green: 153.0/255.0, blue: 0.0/255.0, alpha: 1)
@@ -126,28 +127,26 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [Activity]
        
         if let results = fetchedResults {
+            completedActivities = results
             //println("fetched Results:\(results)")
-            for activity: Activity in results {
-//                println("activity:\(activity.character)")
-                
-                let row:Int = Int(activity.row)
-                let section:Int = Int(activity.section)
-                let ip = NSIndexPath(forRow: Int(activity.row), inSection: Int(activity.section))
-                
-                //let cell = self.collectionView!.cellForItemAtIndexPath(ip) as BaseCollectionViewCell {
-                let cell = collectionView(self.collectionView!, cellForItemAtIndexPath:ip) as BaseCollectionViewCell
-                    if activity.character == "LEFT" {
-                        if cell.leftButton != nil {
-                            println("Cell = \(cell) \n")
-                            println ("LeftCell:\(cell.leftButton.backgroundColor)")
-                            self.collectionView!.reloadItemsAtIndexPaths([ip])
-                            leftButtonAction(cell.leftButton)
-                        }
-                    }
-            }
+            
 
         } else {
             println("Could not fetch \(error), \(error!.userInfo)")
+        }
+    }
+    
+    func changeButtonColor(cell:BaseCollectionViewCell, ip:NSIndexPath){
+        for activity: Activity in completedActivities {
+            if Int(activity.row) == ip.row && Int(activity.section) == ip.section {
+                if activity.name == cell.textLabel.text{
+                    if activity.character == "LEFT" {
+                        if cell.leftButton != nil {
+                            cell.leftButton.backgroundColor = UIColor.blackColor()
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -175,10 +174,12 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         }else {
             cell.textLabel.text = self.bottomItems[indexPath.row]
         }
+       
         
         cell.leftButton.row = indexPath.row
         cell.leftButton.section = indexPath.section
         cell.leftButton.cellName = cell.textLabel.text
+        
         cell.leftButton.addTarget(self, action: "leftButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
         
         cell.middleButton.row = indexPath.row
@@ -190,6 +191,8 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         cell.rightButton.section = indexPath.section
         cell.rightButton.cellName = cell.textLabel.text!
         cell.rightButton.addTarget(self, action: "rightButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+       
+        changeButtonColor(cell, ip:indexPath)
         
         return cell
     }
