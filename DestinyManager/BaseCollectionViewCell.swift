@@ -9,6 +9,10 @@
 import UIKit
 
 class BaseCollectionViewCell: UICollectionViewCell{
+
+    var leftButton: CellButton!
+    var middleButton: CellButton!
+    var rightButton: CellButton!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -31,17 +35,17 @@ class BaseCollectionViewCell: UICollectionViewCell{
         textLabel.textAlignment = .Center
         contentView.addSubview(textLabel)
 //        
-//        var leftButton=UIButton(frame: CGRectMake(0, frame.size.height-subHeight, frame.size.width/3, subHeight))
+        var leftButton=UIButton(frame: CGRectMake(0, frame.size.height-subHeight, frame.size.width/3, subHeight))
 //        leftButton.backgroundColor = greenColor
 //        leftButton.addTarget(self, action: "leftButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
 //        contentView.addSubview(leftButton)
 //        
-//        var middleButton=UIButton(frame: CGRectMake(frame.size.width/3, frame.size.height-subHeight, frame.size.width/3, subHeight))
+        var middleButton=UIButton(frame: CGRectMake(frame.size.width/3, frame.size.height-subHeight, frame.size.width/3, subHeight))
 //        middleButton.backgroundColor = orangeColor
 //        middleButton.addTarget(self, action: "middleButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
 //        contentView.addSubview(middleButton)
 //        
-//        var rightButton=UIButton(frame: CGRectMake(frame.size.width/3*2, frame.size.height-subHeight, frame.size.width/3, subHeight))
+        var rightButton=UIButton(frame: CGRectMake(frame.size.width/3*2, frame.size.height-subHeight, frame.size.width/3, subHeight))
 //        rightButton.backgroundColor = yellowColor
 //        rightButton.addTarget(self, action: "rightButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
 //        contentView.addSubview(rightButton)

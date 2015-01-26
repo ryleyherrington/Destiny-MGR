@@ -109,8 +109,8 @@
 				4CC07A511A72F26300CACFE5 /* AppDelegate.swift */,
 				4CC07A581A72F26300CACFE5 /* Main.storyboard */,
 				4CC07A5B1A72F26300CACFE5 /* Images.xcassets */,
-				4CC07A5D1A72F26300CACFE5 /* LaunchScreen.xib */,
 				4CC07A531A72F26300CACFE5 /* DestinyManager.xcdatamodeld */,
+				4CC07A5D1A72F26300CACFE5 /* LaunchScreen.xib */,
 				4CC07A4F1A72F26300CACFE5 /* Supporting Files */,
 			);
 			path = DestinyManager;

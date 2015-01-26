@@ -3,10 +3,11 @@
     <entity name="Activity" representedClassName="Activity" syncable="YES">
         <attribute name="character" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="finished" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="indexPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="row" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="section" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Activity" positionX="-8739" positionY="-3591" width="128" height="103"/>
+        <element name="Activity" positionX="-8739" positionY="-3591" width="128" height="118"/>
     </elements>
 </model>

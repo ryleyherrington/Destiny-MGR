@@ -16,6 +16,7 @@ class Activity: NSManagedObject {
     @NSManaged var character: String
     @NSManaged var finished: String
     @NSManaged var name: String
-    @NSManaged var indexPath: String
+    @NSManaged var row: Int16
+    @NSManaged var section: Int16
 
 }

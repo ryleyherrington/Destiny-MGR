@@ -17,7 +17,6 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     var topItems = [String]()
     var bottomItems = [String]()
     var activities = [Activity]()
-    var completedActivities = [Activity]()
     
     let greenColor  = UIColor (red: 51.0/255.0, green: 102.0/255.0, blue: 0.0/255.0, alpha: 1)
     let orangeColor = UIColor (red: 255.0/255.0, green: 153.0/255.0, blue: 0.0/255.0, alpha: 1)
@@ -106,6 +105,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         collectionView!.registerClass(BaseCollectionViewCell.self, forCellWithReuseIdentifier: "BaseCollectionViewCell")
         collectionView!.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(collectionView!)
+        getActivities()
     }
    
     func getActivities(){
@@ -122,10 +122,18 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [Activity]
        
         if let results = fetchedResults {
-            println("fetched Results:\(results)")
-            
+            //println("fetched Results:\(results)")
             for activity: Activity in results {
-                    println("activity:\(activity.character)")
+                println("activity:\(activity.character)")
+                let row:Int = Int(activity.row)
+                let section:Int = Int(activity.section)
+//                let ip = NSIndexPath(forRow: Int(activity.row), inSection: Int(activity.section))
+                let ip = NSIndexPath(forRow: row, inSection: section)
+                
+//                let cell:BaseCollectionViewCell = collectionView(collectionView, cellForItemAtIndexPath:ip)
+                if activity.character == "LEFT" {
+ //                   cell.leftButton.backgroundColor = UIColor.blackColor()
+                }
             }
 
         } else {
@@ -135,10 +143,6 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //Then we wanna print out the stuff we have
-        getActivities()
-        
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -166,22 +170,29 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         
         let subHeight = cell.frame.size.height/3
         
-        var leftButton=CellButton(frame: CGRectMake(0, cell.frame.size.height-subHeight, cell.frame.size.width/3, subHeight))
-        leftButton.indexPath = "\(indexPath.section), \(indexPath.row) "
+        let leftButton = cell.leftButton
+  //      leftButton=CellButton(frame: CGRectMake(0, cell.frame.size.height-subHeight, cell.frame.size.width/3, subHeight))
+        leftButton.row = indexPath.row
+        leftButton.section = indexPath.section
         leftButton.cellName = cell.textLabel.text
         leftButton.backgroundColor = greenColor
         leftButton.addTarget(self, action: "leftButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(leftButton)
         
-        var middleButton=CellButton(frame: CGRectMake(cell.frame.size.width/3, cell.frame.size.height-subHeight, cell.frame.size.width/3, subHeight))
-        middleButton.indexPath = "\(indexPath.section), \(indexPath.row) "
+        let middleButton = cell.middleButton
+ //       middleButton=CellButton(frame: CGRectMake(cell.frame.size.width/3, cell.frame.size.height-subHeight, cell.frame.size.width/3, subHeight))
+        middleButton.row = indexPath.row
+        middleButton.section = indexPath.section
         middleButton.cellName = cell.textLabel.text!
         middleButton.backgroundColor = orangeColor
         middleButton.addTarget(self, action: "middleButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.addSubview(middleButton)
         
-        var rightButton=CellButton(frame: CGRectMake(cell.frame.size.width/3*2, cell.frame.size.height-subHeight, cell.frame.size.width/3, subHeight))
-        rightButton.indexPath = "\(indexPath.section), \(indexPath.row) "
+        
+        let rightButton = cell.rightButton
+//        rightButton=CellButton(frame: CGRectMake(cell.frame.size.width/3*2, cell.frame.size.height-subHeight, cell.frame.size.width/3, subHeight))
+        rightButton.row = indexPath.row
+        rightButton.section = indexPath.section 
         rightButton.cellName = cell.textLabel.text!
         rightButton.backgroundColor = yellowColor
         rightButton.addTarget(self, action: "rightButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -203,10 +214,10 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         var button:CellButton = sender
         if (button.backgroundColor == UIColor .blackColor()){
             button.backgroundColor = greenColor
-            buttonPressed("LEFT", on: "NO", cell:button.cellName, path:button.indexPath)
+            buttonPressed("LEFT", on: "NO", cell:button.cellName, row:button.row, section:button.section)
         } else{
             button.backgroundColor = UIColor .blackColor()
-            buttonPressed("LEFT", on: "YES", cell:button.cellName, path:button.indexPath)
+            buttonPressed("LEFT", on: "YES", cell:button.cellName, row:button.row, section:button.section)
         }
     }
     
@@ -214,10 +225,10 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         var button:CellButton = sender
         if (button.backgroundColor == UIColor .blackColor()){
             button.backgroundColor = orangeColor
-            buttonPressed("MIDDLE", on: "NO", cell:button.cellName, path:button.indexPath)
+            buttonPressed("MIDDLE", on: "NO", cell:button.cellName, row:button.row, section:button.section)
         } else{
             button.backgroundColor = UIColor .blackColor()
-            buttonPressed("MIDDLE", on: "YES", cell:button.cellName, path:button.indexPath)
+            buttonPressed("MIDDLE", on: "YES", cell:button.cellName, row:button.row, section:button.section)
         }
     }
     
@@ -225,15 +236,15 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         var button:CellButton = sender
         if (button.backgroundColor == UIColor .blackColor()){
             button.backgroundColor = yellowColor
-            buttonPressed("RIGHT", on: "NO", cell:button.cellName, path:button.indexPath)
+            buttonPressed("RIGHT", on: "NO", cell:button.cellName, row:button.row, section:button.section)
         } else{
             button.backgroundColor = UIColor .blackColor()
-            buttonPressed("RIGHT", on: "YES", cell:button.cellName, path:button.indexPath)
+            buttonPressed("RIGHT", on: "YES", cell:button.cellName, row:button.row, section:button.section)
         }
     }
     
     
-    func buttonPressed(button: NSString, on: NSString, cell:NSString, path:NSString) {
+    func buttonPressed(button: NSString, on: NSString, cell:NSString, row:Int, section:Int) {
         
         //1 get references
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
@@ -249,7 +260,8 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         activity.setValue(cell, forKey: "name")
         activity.setValue(button, forKey:"character")
         activity.setValue(on, forKey:"finished")
-        activity.setValue(path, forKey:"indexPath")
+        activity.setValue(row, forKey:"row")
+        activity.setValue(section, forKey:"section")
         
         
         //4
