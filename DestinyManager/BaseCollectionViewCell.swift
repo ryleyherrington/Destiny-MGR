@@ -25,13 +25,13 @@ class BaseCollectionViewCell: UICollectionViewCell{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = UIColor.grayColor()
+        contentView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.25)
         
         let subHeight = frame.size.height/3
         
         let textFrame = CGRect(x: 0, y: 0, width: frame.size.width, height: subHeight)
         textLabel = UILabel(frame: textFrame)
-        textLabel.font = UIFont.systemFontOfSize(20.0)
+        textLabel.font = UIFont.systemFontOfSize(22.0)
         textLabel.textAlignment = .Center
         textLabel.textColor = UIColor.whiteColor()
         contentView.addSubview(textLabel)

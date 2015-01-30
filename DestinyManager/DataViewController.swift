@@ -104,15 +104,59 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         collectionView!.dataSource = self
         collectionView!.delegate = self
         collectionView!.registerClass(BaseCollectionViewCell.self, forCellWithReuseIdentifier: "BaseCollectionViewCell")
-        collectionView!.backgroundColor = UIColor.whiteColor()
+        collectionView!.backgroundColor = UIColor.clearColor()
+        var backgroundImage:UIImage = UIImage(named: "stars.jpg")!
+        
+        let blurEffect = UIBlurEffect(style: .Light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        self.view.backgroundColor = UIColor(patternImage: backgroundImage)
+        
         self.view.addSubview(collectionView!)
         
-//        var b = UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: Selector("getActivities"))
-//        self.navigationItem.rightBarButtonItem = b
         getActivities()
-
+        
+//        UIGraphicsBeginImageContextWithOptions(CGSizeMake(10,10), false, 1)
+//        let con = UIGraphicsGetCurrentContext()
+//        CGContextAddEllipseInRect(con, CGRectMake(0,0,10,10))
+//        CGContextSetFillColorWithColor(con, UIColor.whiteColor().CGColor)
+//        CGContextFillPath(con)
+//        let im = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//        
+//        let cell = CAEmitterCell()
+//        cell.birthRate = 5
+//        cell.lifetime = 1
+//        cell.velocity = 10
+//        cell.contents = im.CGImage
+//        
+//        let emit = CAEmitterLayer()
+//        emit.emitterPosition = CGPointMake(0,0)
+//        emit.emitterShape = kCAEmitterLayerPoint
+//        emit.emitterMode = kCAEmitterLayerPoints
+//        
+//        emit.emitterCells = [cell]
+//        view!.layer.addSublayer(emit)
+//        
+//        cell.birthRate = 100
+//        cell.lifetime = 1.5
+//        cell.velocity = 100
+//        cell.emissionRange = CGFloat(M_PI)/5.0
+//        
+//        cell.xAcceleration = -40
+//        cell.yAcceleration = 200
+//        
+//        cell.lifetimeRange = 0.4
+//        cell.velocityRange = 20
+//        cell.scaleRange = 0.2
+//        cell.scaleSpeed = 0.2
+//        
+//        cell.color = UIColor.whiteColor().CGColor
+        
+      
     }
-   
+    
     func getActivities(){
         //1
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
@@ -140,6 +184,9 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         for activity: Activity in completedActivities {
             if Int(activity.row) == ip.row && Int(activity.section) == ip.section {
                 if activity.name == cell.textLabel.text{
+                    if activity.finished == "NO" {
+                        println("activity == NO BRO")
+                    }
                     if activity.character == "LEFT" && cell.leftButton != nil  && activity.finished=="YES" {
                         cell.leftButton.backgroundColor = UIColor.blackColor()
                     }else if activity.character == "MIDDLE" && cell.middleButton != nil  && activity.finished=="YES" {
