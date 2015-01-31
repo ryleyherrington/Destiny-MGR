@@ -21,11 +21,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mMC-7x-jNf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="754" y="451"/>
+            <point key="canvasLocation" x="776" y="429"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="LoginViewController" id="vXZ-lx-hvc" customClass="LoginViewController" customModule="DestinyManager" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
@@ -62,8 +63,8 @@
                                     <action selector="loadCharacter:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Hek-1f-A8D"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x6R-YA-KHj">
-                                <rect key="frame" x="283" y="360" width="34" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x6R-YA-KHj">
+                                <rect key="frame" x="283" y="400" width="34" height="30"/>
                                 <state key="normal" title="SKIP">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -78,8 +79,12 @@
                             <constraint firstItem="iR9-qf-J0G" firstAttribute="top" secondItem="40V-sO-CpC" secondAttribute="bottom" constant="8" id="5FN-je-fmD"/>
                             <constraint firstAttribute="centerX" secondItem="3Yh-a5-heY" secondAttribute="centerX" constant="-0.5" id="8i9-Fj-XXj"/>
                             <constraint firstItem="3Yh-a5-heY" firstAttribute="top" secondItem="iR9-qf-J0G" secondAttribute="bottom" constant="8" id="JO3-dc-SkD"/>
+                            <constraint firstItem="x6R-YA-KHj" firstAttribute="trailing" secondItem="3Yh-a5-heY" secondAttribute="trailing" constant="-76" id="Wcf-Mi-4wr"/>
                             <constraint firstAttribute="centerY" secondItem="iR9-qf-J0G" secondAttribute="centerY" id="i2m-El-yxR"/>
+                            <constraint firstItem="x6R-YA-KHj" firstAttribute="leading" secondItem="3Yh-a5-heY" secondAttribute="leading" constant="75" id="i5E-qD-IXa"/>
                             <constraint firstAttribute="centerX" secondItem="iR9-qf-J0G" secondAttribute="centerX" constant="-0.5" id="pdo-rc-wxj"/>
+                            <constraint firstItem="x6R-YA-KHj" firstAttribute="top" secondItem="3Yh-a5-heY" secondAttribute="bottom" constant="48" id="sFv-EW-dzL"/>
+                            <constraint firstItem="x6R-YA-KHj" firstAttribute="centerX" secondItem="3Yh-a5-heY" secondAttribute="centerX" constant="-0.5" id="us8-1e-6Sw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5cA-Rp-t6f"/>
@@ -89,7 +94,6 @@
                         <outlet property="systemSelector" destination="iR9-qf-J0G" id="xVB-Da-rvm"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="776" y="-286"/>
         </scene>

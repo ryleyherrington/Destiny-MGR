@@ -37,7 +37,7 @@ class LoginViewController: UIViewController {
             })
         }
     }
- 
+    
     @IBAction func SkipThisPage(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewControllerWithIdentifier("DestinyViewController") as ViewController

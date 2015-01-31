@@ -10,6 +10,7 @@ import UIKit
 
 class BaseCollectionViewCell: UICollectionViewCell{
     
+    var numberOfButtons:Int = 0
     var leftButton: CellButton!
     var middleButton: CellButton!
     var rightButton: CellButton!
@@ -25,7 +26,7 @@ class BaseCollectionViewCell: UICollectionViewCell{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.25)
+        contentView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.75)
         
         let subHeight = frame.size.height/3
         
@@ -52,4 +53,5 @@ class BaseCollectionViewCell: UICollectionViewCell{
         contentView.addSubview(rightButton)
         
     }
+    
 }
