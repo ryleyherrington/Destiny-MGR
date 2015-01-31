@@ -13,11 +13,17 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
   
     var collectionView: UICollectionView?
     var dataObject: AnyObject?
+    
+    //User Data ... this is a gross implementation
+    //Please refactor me in the future
     var type: String?
     var topItems = [String]()
     var bottomItems = [String]()
+    
+    //Player data
     var activities = [Activity]()
     var completedActivities = [Activity]()
+    var player:PlayerInfo? = nil
     
     let greenColor  = UIColor (red: 51.0/255.0, green: 102.0/255.0, blue: 0.0/255.0, alpha: 1)
     let orangeColor = UIColor (red: 255.0/255.0, green: 153.0/255.0, blue: 0.0/255.0, alpha: 1)
@@ -26,10 +32,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        // Do any additional setup after loading the view, typically from a nib.
         if type != nil {
-           // println("IN DATA \(type)")
-            
             //initialize
             topItems = []
             bottomItems = []
@@ -98,6 +101,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         let cellWidth = (screenSize.width - 20)
         let cellHeight = (screenSize.height/5)
 
+        println("# of characters= \(player?.characters?.count)")
         
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)

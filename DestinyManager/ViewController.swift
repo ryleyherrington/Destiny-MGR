@@ -23,6 +23,7 @@ class ViewController: UIViewController, UIPageViewControllerDelegate{
         self.pageViewController!.delegate = self
         
         let startingViewController: DataViewController = self.modelController.viewControllerAtIndex(0, storyboard: self.storyboard!)!
+        startingViewController.player = player
         let viewControllers: NSArray = [startingViewController]
         self.pageViewController!.setViewControllers(viewControllers, direction: .Forward, animated: false, completion: {done in })
         
