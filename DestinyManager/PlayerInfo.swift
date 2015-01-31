@@ -20,19 +20,41 @@ struct PlayerInfo {
     private(set) var playerHash:String?
     private(set) var playerSystem:SystemType
     private(set) var displayName:String
+    private(set) var clanName:String?
+    private(set) var clanTag:String?
+    private(set) var inventory: NSDictionary?
+    private(set) var grimoireScore: Int?
+    private(set) var characters: [Character]?
     
     init(name:String, system:SystemType, hash:String?) {
         self.displayName = name
         self.playerSystem = system
-        self.playerHash = hash
+        self.playerHash = hash // Will this always be nil? The only case I see this constructor currently being used
+        // is to create "login" a new user?
+        
+        self.clanName = nil
+        self.clanTag = nil
+        self.inventory = nil
+        self.grimoireScore = nil
+        self.characters = nil
     }
     
     //structs can't be stored in NSUserDefaults (they're not objects) so we "archive" ourself as a dictionary
-    init(dictionary:[String:String]) {
-        self.playerHash = dictionary["playerHash"]!
-        let raw = dictionary["playerSystem"]!
+    init(dictionary:[String:Any]) {
+        
+        // This feels unsafe...is there a proper way to check for validity?
+        let raw = dictionary["playerSystem"]! as String
+        let inventory = dictionary["inventory"] as NSDictionary
         self.playerSystem = SystemType(rawValue: raw.toInt()!)!
-        self.displayName = dictionary["displayName"]!
+        
+        self.playerHash = dictionary["playerHash"]! as? String
+        self.displayName = dictionary["displayName"]! as String
+        self.clanName = dictionary["clanName"]! as? String
+        self.clanTag = dictionary["clanTag"]! as? String
+        self.inventory = dictionary["inventory"]! as? NSDictionary
+        self.grimoireScore = dictionary["grimoireScore"]! as? Int
+        self.characters = Character.createCharactersFromData(dictionary["characters"]! as NSArray)
+        
     }
     
     func toDictionary() -> [String:String] {
