@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
             self.presentDestinyViewController(existing)
         } else {
             let newPlayer = PlayerInfo(name: name, system: system, hash: nil)
-            ServiceManager.fetchPlayerHashAsync(newPlayer, completion: { (info) -> Void in
+            ServiceManager.fetchPlayerAsync(newPlayer, completion: { (info) -> Void in
                 dispatch_async(dispatch_get_main_queue()){
                     self.presentDestinyViewController(info)
                 }
