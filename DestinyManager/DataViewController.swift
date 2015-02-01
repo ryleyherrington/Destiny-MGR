@@ -24,7 +24,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     var activities = [Activity]()
     var completedActivities = [Activity]()
     var player:PlayerInfo? = nil
-    
+   
     let greenColor  = UIColor (red: 51.0/255.0, green: 102.0/255.0, blue: 0.0/255.0, alpha: 1)
     let orangeColor = UIColor (red: 255.0/255.0, green: 153.0/255.0, blue: 0.0/255.0, alpha: 1)
     let yellowColor = UIColor (red: 255.0/255.0, green: 204.0/255.0, blue: 0.0/255.0, alpha: 1)
@@ -101,7 +101,11 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         let cellWidth = (screenSize.width - 20)
         let cellHeight = (screenSize.height/5)
 
-        println("# of characters= \(player?.characters?.count)")
+//      println("# of characters= \(player?.characters?.count)")
+//      println("# of characters= \(player?.characters?[0].characterLevel)")
+//      player?.characters?[0].emblemPath
+//      player?.characters?[0].backgroundPath
+        
         
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
@@ -114,18 +118,13 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         let blurEffect = UIBlurEffect(style: .Light)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
-//        blurView.frame = backgroundImage
+//      blurView.frame = backgroundImage
         
         self.view.backgroundColor = UIColor(patternImage: backgroundImage)
-        
         self.view.addSubview(collectionView!)
-        
         getActivities()
-        
     }
    
-    
-    
     func getActivities(){
         //1
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
@@ -154,7 +153,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
             if Int(activity.row) == ip.row && Int(activity.section) == ip.section {
                 if activity.name == cell.textLabel.text{
                     if activity.finished == "NO" {
-                        println("activity == NO BRO")
+//                        println("activity == NO BRO")
                     }
                     if activity.character == "LEFT" && cell.leftButton != nil  && activity.finished=="YES" {
                         cell.leftButton.backgroundColor = UIColor.blackColor()
@@ -192,24 +191,23 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         }else {
             cell.textLabel.text = self.bottomItems[indexPath.row]
         }
-       
+      
         
-        cell.leftButton.row = indexPath.row
-        cell.leftButton.section = indexPath.section
-        cell.leftButton.cellName = cell.textLabel.text
-        
-        cell.leftButton.addTarget(self, action: "leftButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        cell.middleButton.row = indexPath.row
-        cell.middleButton.section = indexPath.section
-        cell.middleButton.cellName = cell.textLabel.text!
-        cell.middleButton.addTarget(self, action: "middleButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        cell.rightButton.row = indexPath.row
-        cell.rightButton.section = indexPath.section
-        cell.rightButton.cellName = cell.textLabel.text!
-        cell.rightButton.addTarget(self, action: "rightButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
-       
+        var count= player?.characters?.count
+        if count != nil{
+            switch count
+            {
+            case 1:
+                self .setupOneButton(cell, indexPath: indexPath)
+            case 2:
+                self .setupTwoButton(cell, indexPath: indexPath)
+            case 3:
+                self .setupThreeButton(cell, indexPath: indexPath)
+            default:
+                setupOneButton(cell, indexPath: indexPath)
+            }
+            
+        }
         changeButtonColor(cell, ip:indexPath)
         
         return cell
@@ -222,6 +220,32 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         }else {
             let selectedItem = bottomItems[indexPath.row]
         }
+    }
+    
+    func setupOneButton(cell:BaseCollectionViewCell, indexPath:NSIndexPath){
+        cell.leftButton.row = indexPath.row
+        cell.leftButton.section = indexPath.section
+        cell.leftButton.cellName = cell.textLabel.text
+        cell.leftButton.addTarget(self, action: "leftButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    
+    func setupTwoButton(cell:BaseCollectionViewCell, indexPath:NSIndexPath){
+        self.setupOneButton(cell, indexPath: indexPath)
+        
+        cell.middleButton.row = indexPath.row
+        cell.middleButton.section = indexPath.section
+        cell.middleButton.cellName = cell.textLabel.text!
+        cell.middleButton.addTarget(self, action: "middleButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    
+    func setupThreeButton(cell:BaseCollectionViewCell, indexPath:NSIndexPath){
+        self.setupOneButton(cell, indexPath: indexPath)
+        self.setupTwoButton(cell, indexPath: indexPath)
+        
+        cell.rightButton.row = indexPath.row
+        cell.rightButton.section = indexPath.section
+        cell.rightButton.cellName = cell.textLabel.text!
+        cell.rightButton.addTarget(self, action: "rightButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     func leftButtonAction(sender:CellButton!) {
@@ -276,7 +300,6 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         activity.setValue(on, forKey:"finished")
         activity.setValue(row, forKey:"row")
         activity.setValue(section, forKey:"section")
-        
         
         //4
         var error: NSError?

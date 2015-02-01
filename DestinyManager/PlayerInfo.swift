@@ -49,8 +49,8 @@ struct PlayerInfo {
         
         self.playerHash = dictionary["playerHash"]! as? String
         self.displayName = dictionary["displayName"]! as String
-        self.clanName = dictionary["clanName"]! as? String
-        self.clanTag = dictionary["clanTag"]! as? String
+        self.clanName = dictionary["clanName"]? as? String
+        self.clanTag = dictionary["clanTag"]? as? String
         self.inventory = dictionary["inventory"]! as? NSDictionary
         self.grimoireScore = dictionary["grimoireScore"]! as? Int
         self.characters = Character.createCharactersFromData(dictionary["characters"]! as NSArray)
