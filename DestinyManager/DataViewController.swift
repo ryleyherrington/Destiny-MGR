@@ -23,7 +23,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     //Player data
     var activities = [Activity]()
     var completedActivities = [Activity]()
-    var player:PlayerInfo? = nil
+    var player:PlayerInfo! = nil
    
     let greenColor  = UIColor (red: 51.0/255.0, green: 102.0/255.0, blue: 0.0/255.0, alpha: 1)
     let orangeColor = UIColor (red: 255.0/255.0, green: 153.0/255.0, blue: 0.0/255.0, alpha: 1)
@@ -105,7 +105,6 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
 //      println("# of characters= \(player?.characters?[0].characterLevel)")
 //      player?.characters?[0].emblemPath
 //      player?.characters?[0].backgroundPath
-        
         
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
@@ -192,24 +191,23 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
             cell.textLabel.text = self.bottomItems[indexPath.row]
         }
       
-        
-        var count= player?.characters?.count
-        if count != nil{
-            switch count
-            {
-            case 1:
-                self .setupOneButton(cell, indexPath: indexPath)
-            case 2:
-                self .setupTwoButton(cell, indexPath: indexPath)
-            case 3:
-                self .setupThreeButton(cell, indexPath: indexPath)
-            default:
-                setupOneButton(cell, indexPath: indexPath)
-            }
-            
+     //   let count:Int = player!.characters!.count
+     /*   switch count
+        {
+        case 1:
+            self .setupOneButton(cell, indexPath: indexPath)
+        case 2:
+            self .setupTwoButton(cell, indexPath: indexPath)
+        case 3:
+            self .setupThreeButton(cell, indexPath: indexPath)
+        default:
+            setupOneButton(cell, indexPath: indexPath)
         }
+        
         changeButtonColor(cell, ip:indexPath)
         
+*/
+        setupThreeButton(cell, indexPath: indexPath)
         return cell
     }
     
