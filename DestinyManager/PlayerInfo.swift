@@ -55,6 +55,7 @@ struct PlayerInfo {
         self.grimoireScore = dictionary["grimoireScore"]! as? Int
         self.characters = Character.createCharactersFromData(dictionary["characters"]! as NSArray)
         
+        self.addToStorage()
     }
     
     func toDictionary() -> [String:String] {
@@ -86,8 +87,12 @@ struct PlayerInfo {
         
         if let dicts = storedPlayers {
             for dict in dicts as [[String: String]] {
-                let player = PlayerInfo(dictionary: dict)
+                // let player = PlayerInfo(dictionary: dict)
+                let name:String = dict["displayName"]! as String
+                let system:String = dict["playerSystem"]! as String
+                let hash:String = dict["playerHash"]! as String
                 
+                let player = PlayerInfo(name: name, system: SystemType(rawValue:system.toInt()!)!, hash: hash)
                 loaded.append(player)
             }
         }

@@ -26,16 +26,19 @@ class LoginViewController: UIViewController {
         //todo show a fancy spinner thing here while we load and populate the hash and all that jazz
         let name = self.characterNameField.text
         let system = SystemType(rawValue: self.systemSelector.selectedSegmentIndex+1)!
+        var newPlayer = PlayerInfo(name: name, system: system, hash: nil)
+        
         if let existing = PlayerInfo.storedPlayer(name, system: system) {
-            self.presentDestinyViewController(existing)
-        } else {
-            let newPlayer = PlayerInfo(name: name, system: system, hash: nil)
-            ServiceManager.fetchPlayerAsync(newPlayer, completion: { (info) -> Void in
-                dispatch_async(dispatch_get_main_queue()){
-                    self.presentDestinyViewController(info)
-                }
-            })
+            //self.presentDestinyViewController(existing)
+            newPlayer = existing
         }
+        
+        ServiceManager.fetchPlayerAsync(newPlayer, completion: { (info) -> Void in
+            dispatch_async(dispatch_get_main_queue()){
+                self.presentDestinyViewController(info)
+            }
+        })
+        
     }
     
     @IBAction func SkipThisPage(sender: AnyObject) {
