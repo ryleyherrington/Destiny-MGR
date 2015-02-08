@@ -55,8 +55,8 @@ struct ServiceManager {
                             let (characterArray, clanName, clanTag, inventory, grimoirScore) = (dictData["characters"] as? NSArray, dictData["clanName"] as? NSString, dictData["clanTag"] as? NSString, dictData["inventory"] as? NSDictionary, dictData["grimoireScore"] as? Int)
                             
                             // Fill in the empty dictionary with the data returned
-                            dictionary["clanTag"] = clanTag!
-                            dictionary["clanName"] = clanName!
+                            dictionary["clanTag"] = clanTag ?? ""
+                            dictionary["clanName"] = clanName ?? ""
                             dictionary["inventory"] = inventory!
                             dictionary["characters"] = characterArray!
                             dictionary["grimoireScore"] = grimoirScore!
