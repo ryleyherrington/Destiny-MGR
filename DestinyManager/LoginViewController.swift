@@ -68,7 +68,7 @@ class LoginViewController: UIViewController {
             //pre-populate the text field here or just auto-login
             self.characterNameField.text = lastPlayer.displayName
             self.systemSelector.selectedSegmentIndex = (lastPlayer.playerSystem.rawValue - 1)
-            
+            self.loadButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside);
             //we may want to in the future provide an auto-complete list of all entered players
             //or something neato like that
         }
