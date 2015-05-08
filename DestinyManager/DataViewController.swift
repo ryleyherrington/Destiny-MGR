@@ -124,7 +124,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     
     func getActivities(){
         //1
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         let managedContext = appDelegate.managedObjectContext!
         
@@ -182,7 +182,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     }
    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BaseCollectionViewCell", forIndexPath: indexPath) as BaseCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BaseCollectionViewCell", forIndexPath: indexPath) as! BaseCollectionViewCell
         if indexPath.section == 0 {
             cell.textLabel.text = self.topItems[indexPath.row]
         }else {
@@ -257,14 +257,14 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     func buttonPressed(button: NSString, on: NSString, cell:NSString, row:Int, section:Int) {
         
         //1 get references
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         let managedContext = appDelegate.managedObjectContext!
         
         //2
         let entity =  NSEntityDescription.entityForName("Activity", inManagedObjectContext: managedContext)
         
-        let activity = NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext) as Activity
+        let activity = NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext) as! Activity
         
         //3
         activity.setValue(cell, forKey: "name")

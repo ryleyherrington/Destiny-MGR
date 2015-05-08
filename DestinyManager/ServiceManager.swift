@@ -11,7 +11,7 @@ import Foundation
 extension Dictionary {
     mutating func merge<K, V>(dict: [K: V]){
         for (k, v) in dict {
-            self.updateValue(v as Value, forKey: k as Key)
+            self.updateValue(v as! Value, forKey: k as! Key)
         }
     }
 }
@@ -92,7 +92,7 @@ struct ServiceManager {
         let data = NSData(contentsOfURL: url!)
         var dict = self.parseResponseForPlayerInfo(data!) as [String: Any]
         
-        let tigerUrl = self.urlForTigerAccount(dict["playerSystem"] as String, playerHash: dict["playerHash"] as String)
+        let tigerUrl = self.urlForTigerAccount(dict["playerSystem"] as! String, playerHash: dict["playerHash"] as! String)
         let tigerData = NSData(contentsOfURL: tigerUrl!)
         let tigerDict = self.parseResponseForTigerInfo(tigerData!)
         

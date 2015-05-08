@@ -43,17 +43,17 @@ struct PlayerInfo {
     init(dictionary:[String:Any]) {
         
         // This feels unsafe...is there a proper way to check for validity?
-        let raw = dictionary["playerSystem"]! as String
-        let inventory = dictionary["inventory"] as NSDictionary
+        let raw = dictionary["playerSystem"]! as! String
+        let inventory = dictionary["inventory"] as! NSDictionary
         self.playerSystem = SystemType(rawValue: raw.toInt()!)!
         
         self.playerHash = dictionary["playerHash"]! as? String
-        self.displayName = dictionary["displayName"]! as String
+        self.displayName = dictionary["displayName"]! as! String
         self.clanName = dictionary["clanName"]! as? String
         self.clanTag = dictionary["clanTag"]! as? String
         self.inventory = dictionary["inventory"]! as? NSDictionary
         self.grimoireScore = dictionary["grimoireScore"]! as? Int
-        self.characters = Character.createCharactersFromData(dictionary["characters"]! as NSArray)
+        self.characters = Character.createCharactersFromData(dictionary["characters"]! as! NSArray)
         
         self.addToStorage()
     }
@@ -86,7 +86,7 @@ struct PlayerInfo {
         let storedPlayers = defaults.arrayForKey(StoredPlayersArrayKey)
         
         if let dicts = storedPlayers {
-            for dict in dicts as [[String: String]] {
+            for dict in dicts as! [[String: String]] {
                 // let player = PlayerInfo(dictionary: dict)
                 let name:String = dict["displayName"]! as String
                 let system:String = dict["playerSystem"]! as String

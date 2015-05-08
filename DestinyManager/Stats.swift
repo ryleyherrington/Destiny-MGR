@@ -17,9 +17,9 @@ struct Stats {
     init(name: String, dict: NSDictionary) {
         
         self.statName = name
-        self.statHash = dict["statHash"] as Int
-        self.statValue = dict["value"] as Int
-        self.statMax = dict["maximumValue"] as Int
+        self.statHash = dict["statHash"] as! Int
+        self.statValue = dict["value"] as! Int
+        self.statMax = dict["maximumValue"] as! Int
         
     }
     
@@ -29,7 +29,7 @@ struct Stats {
         var stats = [Stats]()
         
         for (key, value) in dict {
-            let stat = Stats(name: key as String, dict: value as NSDictionary)
+            let stat = Stats(name: key as! String, dict: value as! NSDictionary)
             stats.append(stat)
         }
         
