@@ -43,7 +43,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func SkipThisPage(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("DestinyViewController") as ViewController
+        let vc = storyboard.instantiateViewControllerWithIdentifier("DestinyViewController") as! ViewController
         
         let system = SystemType(rawValue: self.systemSelector.selectedSegmentIndex+1)!
         vc.player = PlayerInfo(name: "RYLEYRO", system:system, hash: nil)
@@ -55,7 +55,7 @@ class LoginViewController: UIViewController {
     func presentDestinyViewController(player:PlayerInfo) -> Void {
         //i'd much rather do this with a segue but I can't figure out how to name the fucking things in this version of xcode
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("DestinyViewController") as ViewController
+        let vc = storyboard.instantiateViewControllerWithIdentifier("DestinyViewController") as! ViewController
         vc.player = player
         vc.navigationItem.title = player.displayName
         self.navigationController?.pushViewController(vc, animated: true)
