@@ -25,99 +25,103 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        // Do any additional setup after loading the view, typically from a nib.
-        if type != nil {
-           // println("IN DATA \(type)")
+        
+        if (PlayerInfo.lastLoadedPlayer() == nil) {
+            //present the login view modally
+        } else {
+            println("Load all our info here")
             
-            //initialize
-            topItems = []
-            bottomItems = []
+            if type != nil {
+                // println("IN DATA \(type)")
+                
+                //initialize
+                topItems = []
+                bottomItems = []
+                
+                if type == "WEEKLY" {
+                    topItems = [
+                        "24 - Heroic",
+                        "28 - Heroic",
+                        "30 - Heroic",
+                    ]
+                    bottomItems = ["Nightfall"]
+                    
+                }
+                if type == "VOG" {
+                    topItems = [
+                        "Reg VOG CP",
+                        "1st Chest",
+                        "Oracles",
+                        "Templar",
+                        "Exotic Chest",
+                        "Gatekeepers",
+                        "Atheon"
+                    ]
+                    
+                    bottomItems = [
+                        "Reg VOG CP",
+                        "1st Chest",
+                        "Oracles",
+                        "Templar",
+                        "Exotic Chest",
+                        "Gatekeepers",
+                        "Atheon"
+                    ]
+                }
+                if type == "CROTA" {
+                    topItems = [
+                        "Reg Crota CP",
+                        "1st Chest",
+                        "Lamps",
+                        "Bridge",
+                        "2nd Chest",
+                        "Deathsinger",
+                        "Crota"
+                    ]
+                    
+                    bottomItems = [
+                        "Hard Crota CP",
+                        "1st Chest",
+                        "Lamps",
+                        "Bridge",
+                        "2nd Chest",
+                        "Deathsinger",
+                        "Crota"
+                    ]
+                }
+            }
             
-            if type == "WEEKLY" {
-                topItems = [
-                    "24 - Heroic",
-                    "28 - Heroic",
-                    "30 - Heroic",
-                ]
-                bottomItems = ["Nightfall"]
-                
-            }
-            if type == "VOG" {
-                topItems = [
-                    "Reg VOG CP",
-                    "1st Chest",
-                    "Oracles",
-                    "Templar",
-                    "Exotic Chest",
-                    "Gatekeepers",
-                    "Atheon"
-                    ]
-                
-                bottomItems = [
-                    "Reg VOG CP",
-                    "1st Chest",
-                    "Oracles",
-                    "Templar",
-                    "Exotic Chest",
-                    "Gatekeepers",
-                    "Atheon"
-                ]
-            }
-            if type == "CROTA" {
-                topItems = [
-                    "Reg Crota CP",
-                    "1st Chest",
-                    "Lamps",
-                    "Bridge",
-                    "2nd Chest",
-                    "Deathsinger",
-                    "Crota"
-                    ]
-                
-                bottomItems = [
-                    "Hard Crota CP",
-                    "1st Chest",
-                    "Lamps",
-                    "Bridge",
-                    "2nd Chest",
-                    "Deathsinger",
-                    "Crota"
-                ]
-            }
+            let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+            layout.sectionInset = UIEdgeInsets(top: 80, left: 10, bottom: 10, right: 10)
+            
+            let screenSize: CGRect = UIScreen.mainScreen().bounds
+            //Half width
+            //let cellWidth = (screenSize.width/2-15)
+            
+            //full width
+            let cellWidth = (screenSize.width - 20)
+            let cellHeight = (screenSize.height/5)
+            
+            
+            layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
+            collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+            collectionView!.dataSource = self
+            collectionView!.delegate = self
+            collectionView!.registerClass(BaseCollectionViewCell.self, forCellWithReuseIdentifier: "BaseCollectionViewCell")
+            collectionView!.backgroundColor = UIColor.clearColor()
+            var backgroundImage:UIImage = UIImage(named: "stars.jpg")!
+            
+            let blurEffect = UIBlurEffect(style: .Light)
+            let blurView = UIVisualEffectView(effect: blurEffect)
+            blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
+            //        blurView.frame = backgroundImage
+            
+            self.view.backgroundColor = UIColor(patternImage: backgroundImage)
+            
+            self.view.addSubview(collectionView!)
+            
+            getActivities()
         }
-        
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 80, left: 10, bottom: 10, right: 10)
-        
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        //Half width
-        //let cellWidth = (screenSize.width/2-15)
-        
-        //full width
-        let cellWidth = (screenSize.width - 20)
-        let cellHeight = (screenSize.height/5)
-
-        
-        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
-        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        collectionView!.dataSource = self
-        collectionView!.delegate = self
-        collectionView!.registerClass(BaseCollectionViewCell.self, forCellWithReuseIdentifier: "BaseCollectionViewCell")
-        collectionView!.backgroundColor = UIColor.clearColor()
-        var backgroundImage:UIImage = UIImage(named: "stars.jpg")!
-       
-        let blurEffect = UIBlurEffect(style: .Light)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
-//        blurView.frame = backgroundImage
-        
-        self.view.backgroundColor = UIColor(patternImage: backgroundImage)
-        
-        self.view.addSubview(collectionView!)
-        
-        getActivities()
-        
     }
    
     
