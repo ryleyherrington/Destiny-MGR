@@ -33,7 +33,6 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
         let cellWidth = (screenSize.width - 20)
         let cellHeight = (screenSize.height/5)
         
-        
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         collectionView!.dataSource = self
@@ -56,7 +55,8 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     override func viewDidAppear(animated: Bool) {
         if (PlayerInfo.lastLoadedPlayer() == nil) {
             //present the login view modally
-            let loginController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier(LoginViewController.StoryboardIdentifier) as! LoginViewController
+            let loginController = UIStoryboard(name: "Main",
+                bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier(LoginViewController.StoryboardIdentifier) as! LoginViewController
             
             presentViewController(loginController, animated: true, completion: nil)
         } else {
