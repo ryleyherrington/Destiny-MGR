@@ -14,6 +14,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var systemSelector: UISegmentedControl!
     @IBOutlet weak var characterNameField: UITextField!
     
+    internal static let StoryboardIdentifier = "LoginViewController"
+    
     @IBAction func loadCharacter(sender: UIButton) {
         //todo move this into it's own validation func
         //also this is pretty shit UX so don't do it
