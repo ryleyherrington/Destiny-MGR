@@ -104,6 +104,7 @@ struct ServiceManager {
         return info
     }
     
+    //TODO: this should probably give back a PlayerInfo? if it can't hit servers or whatever
     static func fetchPlayerAsync(player:PlayerInfo, completion:(PlayerInfo) -> Void) -> Void {
         let url = self.urlForPlayer(player)
         let req = NSURLRequest(URL: url)
@@ -122,9 +123,7 @@ struct ServiceManager {
                 
                 let info = PlayerInfo(dictionary: accountDict)
                 completion(info)
-                
             }
-            
         }
     }
 }
