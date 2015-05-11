@@ -13,6 +13,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loadButton: UIButton!
     @IBOutlet weak var systemSelector: UISegmentedControl!
     @IBOutlet weak var characterNameField: UITextField!
+    @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
     
     internal static let StoryboardIdentifier = "LoginViewController"
     
@@ -25,7 +26,7 @@ class LoginViewController: UIViewController {
             return
         }
         
-        //todo show a fancy spinner thing here while we load and populate the hash and all that jazz
+        toggleLoadingUi(true)
         let name = self.characterNameField.text
         let system = SystemType(rawValue: self.systemSelector.selectedSegmentIndex+1)!
         var newPlayer = PlayerInfo(name: name, system: system, hash: nil)
@@ -37,42 +38,20 @@ class LoginViewController: UIViewController {
         
         ServiceManager.fetchPlayerAsync(newPlayer, completion: { (info) -> Void in
             dispatch_async(dispatch_get_main_queue()){
-                self.presentDestinyViewController(info)
+                //TODO: info should give success or failure or something like that
+                info.addToStorage()
+                
+                self.toggleLoadingUi(false)
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
         })
         
     }
     
-    @IBAction func SkipThisPage(sender: AnyObject) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("DestinyViewController") as! ViewController
+    func toggleLoadingUi(loading: Bool) -> Void {
+        loadButton.hidden = loading
+        activitySpinner.hidden = !loading
         
-        let system = SystemType(rawValue: self.systemSelector.selectedSegmentIndex+1)!
-        vc.player = PlayerInfo(name: "RYLEYRO", system:system, hash: nil)
-        
-        vc.navigationItem.title = "RYLEYRO"
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func presentDestinyViewController(player:PlayerInfo) -> Void {
-        //i'd much rather do this with a segue but I can't figure out how to name the fucking things in this version of xcode
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("DestinyViewController") as! ViewController
-        vc.player = player
-        vc.navigationItem.title = player.displayName
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-       
-        if let lastPlayer = PlayerInfo.lastLoadedPlayer() {
-            //pre-populate the text field here or just auto-login
-            self.characterNameField.text = lastPlayer.displayName
-            self.systemSelector.selectedSegmentIndex = (lastPlayer.playerSystem.rawValue - 1)
-            self.loadButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside);
-            //we may want to in the future provide an auto-complete list of all entered players
-            //or something neato like that
-        }
+        loading ? activitySpinner.startAnimating() : activitySpinner.stopAnimating()
     }
 }
