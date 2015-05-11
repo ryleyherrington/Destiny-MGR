@@ -36,14 +36,14 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="185" id="O4O-jS-xTg"/>
                                 </constraints>
-                                <state key="normal" title="Load">
+                                <state key="normal" title="Save">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="loadCharacter:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Hek-1f-A8D"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DzO-3u-OkL">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DzO-3u-OkL">
                                 <rect key="frame" x="290" y="327" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
