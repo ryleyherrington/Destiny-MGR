@@ -69,13 +69,17 @@ struct ServiceManager {
         return dictionary
     }
     
-    private static func parseResponseForPlayerInfo(data:NSData) -> [String:String] {
+    private static func parseResponseForPlayerInfo(data:NSData) -> [String:String]? {
         var err: NSError? = nil
         let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.AllowFragments, error:&err)
         
         if let root = json as? NSDictionary {
             if let response = root["Response"] as? NSArray {
-                if let info = response[0] as? NSDictionary {
+                if response.count == 0 {
+                    //we're fucked, bail
+                    return nil
+                }
+                if let info = response.firstObject as? NSDictionary {
                     //the if let construct doesn't work with tuples so we might want a safer way to do this
                     let (hash, type, display) = (info["membershipId"] as? String,  info["membershipType"] as? Int, info["displayName"] as? String)
                     let dict = ["displayName": display!, "playerHash": hash!, "playerSystem":String(type!)]
@@ -84,13 +88,13 @@ struct ServiceManager {
             }
         }
         
-        return [String:String]()
+        return nil
     }
     
     static func fetchPlayer(player:PlayerInfo) -> PlayerInfo {
         let url = self.urlForPlayer(player)
         let data = NSData(contentsOfURL: url!)
-        var dict = self.parseResponseForPlayerInfo(data!) as [String: Any]
+        var dict = self.parseResponseForPlayerInfo(data!)! as [String: Any]
         
         let tigerUrl = self.urlForTigerAccount(dict["playerSystem"] as! String, playerHash: dict["playerHash"] as! String)
         let tigerData = NSData(contentsOfURL: tigerUrl!)
@@ -104,25 +108,28 @@ struct ServiceManager {
         return info
     }
     
-    //TODO: this should probably give back a PlayerInfo? if it can't hit servers or whatever
-    static func fetchPlayerAsync(player:PlayerInfo, completion:(PlayerInfo) -> Void) -> Void {
+    static func fetchPlayerAsync(player:PlayerInfo, completion:(PlayerInfo?) -> Void) -> Void {
         let url = self.urlForPlayer(player)
         let req = NSURLRequest(URL: url)
         NSURLConnection.sendAsynchronousRequest(req, queue: self.networkQueue) { (response, data, error) -> Void in
             
             let dict = self.parseResponseForPlayerInfo(data)
-            let tigerUrl = self.urlForTigerAccount(dict["playerSystem"]! as String, playerHash: dict["playerHash"]! as String)
-            let tigerReq = NSURLRequest(URL: tigerUrl)
-            
-            NSURLConnection.sendAsynchronousRequest(tigerReq, queue: self.networkQueue) { (tigerResponse, tigerData, tigerError) -> Void in
+            if dict == nil {
+                completion(nil)
+            } else {
+                let tigerUrl = self.urlForTigerAccount(dict!["playerSystem"]! as String, playerHash: dict!["playerHash"]! as String)
+                let tigerReq = NSURLRequest(URL: tigerUrl)
                 
-                let tigerDict = self.parseResponseForTigerInfo(tigerData)
-                var accountDict = [String:Any]()
-                accountDict.merge(dict)
-                accountDict.merge(tigerDict)
-                
-                let info = PlayerInfo(dictionary: accountDict)
-                completion(info)
+                NSURLConnection.sendAsynchronousRequest(tigerReq, queue: self.networkQueue) { (tigerResponse, tigerData, tigerError) -> Void in
+                    
+                    let tigerDict = self.parseResponseForTigerInfo(tigerData)
+                    var accountDict = [String:Any]()
+                    accountDict.merge(dict!)
+                    accountDict.merge(tigerDict)
+                    
+                    let info = PlayerInfo(dictionary: accountDict)
+                    completion(info)
+                }               
             }
         }
     }
