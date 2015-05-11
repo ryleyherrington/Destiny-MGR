@@ -43,15 +43,9 @@
                                     <action selector="loadCharacter:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Hek-1f-A8D"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x6R-YA-KHj">
-                                <rect key="frame" x="283" y="400" width="34" height="30"/>
-                                <state key="normal" title="SKIP">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="SkipThisPage:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="W2d-PB-bFX"/>
-                                </connections>
-                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DzO-3u-OkL">
+                                <rect key="frame" x="290" y="327" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -59,16 +53,15 @@
                             <constraint firstItem="iR9-qf-J0G" firstAttribute="top" secondItem="40V-sO-CpC" secondAttribute="bottom" constant="8" id="5FN-je-fmD"/>
                             <constraint firstAttribute="centerX" secondItem="3Yh-a5-heY" secondAttribute="centerX" constant="-0.5" id="8i9-Fj-XXj"/>
                             <constraint firstItem="3Yh-a5-heY" firstAttribute="top" secondItem="iR9-qf-J0G" secondAttribute="bottom" constant="8" id="JO3-dc-SkD"/>
-                            <constraint firstItem="x6R-YA-KHj" firstAttribute="trailing" secondItem="3Yh-a5-heY" secondAttribute="trailing" constant="-76" id="Wcf-Mi-4wr"/>
+                            <constraint firstAttribute="centerX" secondItem="DzO-3u-OkL" secondAttribute="centerX" id="T0z-Vg-fAY"/>
+                            <constraint firstItem="DzO-3u-OkL" firstAttribute="centerY" secondItem="3Yh-a5-heY" secondAttribute="centerY" id="Yo6-mq-6Ow"/>
                             <constraint firstAttribute="centerY" secondItem="iR9-qf-J0G" secondAttribute="centerY" id="i2m-El-yxR"/>
-                            <constraint firstItem="x6R-YA-KHj" firstAttribute="leading" secondItem="3Yh-a5-heY" secondAttribute="leading" constant="75" id="i5E-qD-IXa"/>
                             <constraint firstAttribute="centerX" secondItem="iR9-qf-J0G" secondAttribute="centerX" constant="-0.5" id="pdo-rc-wxj"/>
-                            <constraint firstItem="x6R-YA-KHj" firstAttribute="top" secondItem="3Yh-a5-heY" secondAttribute="bottom" constant="48" id="sFv-EW-dzL"/>
-                            <constraint firstItem="x6R-YA-KHj" firstAttribute="centerX" secondItem="3Yh-a5-heY" secondAttribute="centerX" constant="-0.5" id="us8-1e-6Sw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5cA-Rp-t6f"/>
                     <connections>
+                        <outlet property="activitySpinner" destination="DzO-3u-OkL" id="sJm-fX-eER"/>
                         <outlet property="characterNameField" destination="40V-sO-CpC" id="mQA-jD-WLK"/>
                         <outlet property="loadButton" destination="3Yh-a5-heY" id="vNC-d2-ZL7"/>
                         <outlet property="systemSelector" destination="iR9-qf-J0G" id="xVB-Da-rvm"/>
