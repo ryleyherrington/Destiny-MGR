@@ -33,15 +33,15 @@ struct Equipment {
         for element in equipmentArray {
             var dyes = [Dye]()
 
-            let equipmentEntry = element as NSDictionary
-            let itemHash = equipmentEntry["itemHash"] as Int
-            let dyeArray = equipmentEntry["dyes"] as NSArray
+            let equipmentEntry = element as! NSDictionary
+            let itemHash = equipmentEntry["itemHash"] as! Int
+            let dyeArray = equipmentEntry["dyes"] as! NSArray
             
             for dye in dyeArray {
                 
-                let dyeEntry = dye as NSDictionary
-                let channelHash = dyeEntry["channelHash"] as Int
-                let dyeHash = dyeEntry["dyeHash"] as Int
+                let dyeEntry = dye as! NSDictionary
+                let channelHash = dyeEntry["channelHash"] as! Int
+                let dyeHash = dyeEntry["dyeHash"] as! Int
                 
                 dyes.append(Dye(channel: channelHash, dye: dyeHash))
                 

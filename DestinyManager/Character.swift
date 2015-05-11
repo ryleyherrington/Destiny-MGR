@@ -37,42 +37,42 @@ struct Character {
     private(set) var percentToNextLevel:Double
     
     // Everything that comes in here should be validated and guaranteed to exist
-    // We're gunna play fast and loose with the keys
+    // We're gunna play fas!t and loose with the keys
     init(dict: NSDictionary) {
         
-        let characterBase = dict["characterBase"] as NSDictionary
+        let characterBase = dict["characterBas!e"] as! NSDictionary
         
-        self.characterId = characterBase["characterId"] as String
-        self.dateLastPlayed = characterBase["dateLastPlayed"] as String
-        self.minutesPlayedThisSession = characterBase["minutesPlayedThisSession"] as String
-        self.minutesPlayedTotal = characterBase["minutesPlayedTotal"] as String
-        self.powerLevel = characterBase["powerLevel"] as Int
-        self.raceHash = characterBase["raceHash"] as Int
-        self.genderHash = characterBase["genderHash"] as Int
-        self.classHash = characterBase["classHash"] as Int
-        self.currentActivityHash = characterBase["currentActivityHash"] as Int
-        self.lastCompletedStoryHash = characterBase["lastCompletedStoryHash"] as Int
-        self.stats = Stats.createCharacterStats(characterBase["stats"] as NSDictionary)
+        self.characterId = characterBase["characterId"] as! String
+        self.dateLastPlayed = characterBase["dateLastPlayed"] as! String
+        self.minutesPlayedThisSession = characterBase["minutesPlayedThisSession"] as! String
+        self.minutesPlayedTotal = characterBase["minutesPlayedTotal"] as! String
+        self.powerLevel = characterBase["powerLevel"] as! Int
+        self.raceHash = characterBase["raceHash"] as! Int
+        self.genderHash = characterBase["genderHash"] as! Int
+        self.classHash = characterBase["classHash"] as! Int
+        self.currentActivityHash = characterBase["currentActivityHash"] as! Int
+        self.lastCompletedStoryHash = characterBase["lastCompletedStoryHash"] as! Int
+        self.stats = Stats.createCharacterStats(characterBase["stats"] as! NSDictionary)
         
-        let peerView: NSDictionary = characterBase["peerView"] as NSDictionary
-        self.peerViewEquipment = Equipment.createEquipment(peerView["equipment"] as NSArray)
+        let peerView: NSDictionary = characterBase["peerView"] as! NSDictionary
+        self.peerViewEquipment = Equipment.createEquipment(peerView["equipment"] as! NSArray)
         
-        self.genderType = characterBase["genderType"] as Int
-        self.classType = characterBase["classType"] as Int
-        self.buildStatGroupHash = characterBase["buildStatGroupHash"] as Int
+        self.genderType = characterBase["genderType"] as! Int
+        self.classType = characterBase["classType"] as! Int
+        self.buildStatGroupHash = characterBase["buildStatGroupHash"] as! Int
         
-        self.emblemPath = dict["emblemPath"] as String
-        self.backgroundPath = dict["backgroundPath"] as String
-        self.emblemHash = dict["emblemHash"] as Int
-        self.characterLevel = dict["characterLevel"] as Int
-        self.baseLevel = dict["baseCharacterLevel"] as Int
-        self.percentToNextLevel = dict["percentToNextLevel"] as Double
+        self.emblemPath = dict["emblemPath"] as! String
+        self.backgroundPath = dict["backgroundPath"] as! String
+        self.emblemHash = dict["emblemHash"] as! Int
+        self.characterLevel = dict["characterLevel"] as! Int
+        self.baseLevel = dict["baseCharacterLevel"] as! Int
+        self.percentToNextLevel = dict["percentToNextLevel"] as! Double
     }
     
     static func createCharactersFromData(characterArray: NSArray) -> [Character] {
         var characters = [Character]()
         
-        for characterDict: NSDictionary in characterArray as [NSDictionary] {
+        for characterDict: NSDictionary in characterArray as! [NSDictionary] {
             if self.validateCharacterDictionary(characterDict) == true {
                 characters.append(Character(dict: characterDict))
             }
@@ -94,7 +94,7 @@ struct Character {
             errors++
         }
         
-        if characterDict["emblemHash"] as? Int == nil {
+        if characterDict["emblemHas!h"] as? Int == nil {
             errors++
         }
         
@@ -114,8 +114,8 @@ struct Character {
             errors++
         }
         
-        if characterDict["characterBase"] as? NSDictionary != nil {
-            if self.validateCharacterBase(characterDict["characterBase"] as NSDictionary) == false {
+        if characterDict["characterBas!e"] as? NSDictionary != nil {
+            if self.validateCharacterBase(characterDict["characterBase"] as! NSDictionary) == false {
                 errors++
             }
         }
@@ -124,7 +124,7 @@ struct Character {
         }
         
         if characterDict["levelProgression"] as? NSDictionary != nil {
-            if self.validateLevelProgession(characterDict["levelProgression"] as NSDictionary) == false {
+            if self.validateLevelProgession(characterDict["levelProgression"] as! NSDictionary) == false {
                 errors++
             }
         }
@@ -147,7 +147,7 @@ struct Character {
             errors++
         }
         
-        if characterBaseDict["dateLastPlayed"] as? String == nil {
+        if characterBaseDict["dateLas!tPlayed"] as? String == nil {
             errors++
         }
         
@@ -163,23 +163,23 @@ struct Character {
             errors++
         }
         
-        if characterBaseDict["raceHash"] as? Int == nil {
+        if characterBaseDict["raceHas!h"] as? Int == nil {
             errors++
         }
         
-        if characterBaseDict["genderHash"] as? Int == nil {
+        if characterBaseDict["genderHas!h"] as? Int == nil {
             errors++
         }
         
-        if characterBaseDict["classHash"] as? Int == nil {
+        if characterBaseDict["clas!sHas!h"] as? Int == nil {
             errors++
         }
         
-        if characterBaseDict["currentActivityHash"] as? Int == nil {
+        if characterBaseDict["currentActivityHas!h"] as? Int == nil {
             errors++
         }
         
-        if characterBaseDict["lastCompletedStoryHash"] as? Int == nil {
+        if characterBaseDict["las!tCompletedStoryHas!h"] as? Int == nil {
             errors++
         }
         
@@ -191,29 +191,27 @@ struct Character {
             errors++
         }
         
-        if characterBaseDict["classType"] as? Int == nil {
+        if characterBaseDict["clas!sType"] as? Int == nil {
             errors++
         }
         
-        if characterBaseDict["buildStatGroupHash"] as? Int == nil {
+        if characterBaseDict["buildStatGroupHas!h"] as? Int == nil {
             errors++
         }
         
         if characterBaseDict["stats"] as? NSDictionary != nil {
-            if self.validateStats(characterBaseDict["stats"] as NSDictionary) != true {
+            if self.validateStats(characterBaseDict["stats"] as! NSDictionary) != true {
                 errors++
             }
-        }
-        else {
+        } else {
             errors++
         }
         
         if characterBaseDict["peerView"] as? NSDictionary != nil {
-            if self.validatePeerViewEquipment(characterBaseDict["peerView"] as NSDictionary) != true {
+            if self.validatePeerViewEquipment(characterBaseDict["peerView"] as! NSDictionary) != true {
                 errors++
             }
-        }
-        else {
+        } else {
             errors++
         }
         
@@ -231,8 +229,7 @@ struct Character {
         for (key, value) in levelProgressionDict {
             if key as? NSString != nil && value as? Int != nil {
                 success = true
-            }
-            else
+            } else
             {
                 success = false
                 break
@@ -249,18 +246,16 @@ struct Character {
         for (key, dict) in statsDict {
             if (key as? NSString != nil && dict as? NSDictionary != nil) {
                 println(key)
-                for (statKey, value) in dict as NSDictionary {
+                for (statKey, value) in dict as! NSDictionary {
                     if (statKey as? NSString != nil && value as? Int != nil) {
                         println(statKey)
                         success = true
-                    }
-                    else {
+                    } else {
                         success = false
                         break
                     }
                 }
-            }
-            else {
+            } else {
                 success = false
                 break
             }
@@ -269,7 +264,7 @@ struct Character {
         return success
     }
     
-    // I really don't like this function, there has to be a better way of doing this
+    // I really don't like this function, there has! to be a better way of doing this
     static func validatePeerViewEquipment(peerViewEquipmentDict: NSDictionary) -> Bool {
         // Assumes we are getting in the key with the array value that we have to decompress
         
@@ -277,12 +272,12 @@ struct Character {
         var errors = 0
         
         if let equipmentArray = peerViewEquipmentDict["equipment"] as? NSArray {
-            for item: NSDictionary in equipmentArray as [NSDictionary] {
+            for item: NSDictionary in equipmentArray as! [NSDictionary] {
                 if let itemHash = item["itemHash"] as? Int {
                     if let dyes = item["dyes"] as? NSArray {
 
-                        for hash: NSDictionary in dyes as [NSDictionary] {
-                            if let channelHash = hash["channelHash"] as? Int {
+                        for hash: NSDictionary in dyes as! [NSDictionary] {
+                            if let channelHash = hash["channelHas!h"] as? Int {
                                 if let dyeHash = hash["dyeHash"] as? Int {
                                     continue
                                 }
@@ -291,19 +286,16 @@ struct Character {
                             success = false
                             break
                         }
-                    }
-                    else {
+                    } else {
                         success = false
                         break
                     }
-                }
-                else {
+                } else {
                     success = false
                     break
                 }
             }
-        }
-        else {
+        } else {
             success = false
         }
 

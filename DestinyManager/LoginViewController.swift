@@ -13,17 +13,17 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loadButton: UIButton!
     @IBOutlet weak var systemSelector: UISegmentedControl!
     @IBOutlet weak var characterNameField: UITextField!
+    @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
+    
+    internal static let StoryboardIdentifier = "LoginViewController"
     
     @IBAction func loadCharacter(sender: UIButton) {
-        //todo move this into it's own validation func
-        //also this is pretty shit UX so don't do it
-        if characterNameField.text == "" {
-            let alert = UIAlertView(title: "Name", message: "Please enter a character name.", delegate: self, cancelButtonTitle: "Okay")
-            alert.show()
+        if !loginValid() {
             return
         }
         
-        //todo show a fancy spinner thing here while we load and populate the hash and all that jazz
+        toggleLoadingUi(true)
+        
         let name = self.characterNameField.text
         let system = SystemType(rawValue: self.systemSelector.selectedSegmentIndex+1)!
         var newPlayer = PlayerInfo(name: name, system: system, hash: nil)
@@ -35,42 +35,40 @@ class LoginViewController: UIViewController {
         
         ServiceManager.fetchPlayerAsync(newPlayer, completion: { (info) -> Void in
             dispatch_async(dispatch_get_main_queue()){
-                self.presentDestinyViewController(info)
+                
+                self.toggleLoadingUi(false)
+                
+                if info != nil {
+                    info!.addToStorage()
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    let alert = UIAlertView(title: "Error:", message: "Could not load character with that information", delegate: self, cancelButtonTitle: "Try Again")
+                    alert.show()
+                }
             }
         })
-        
     }
     
-    @IBAction func SkipThisPage(sender: AnyObject) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("DestinyViewController") as ViewController
-        
-        let system = SystemType(rawValue: self.systemSelector.selectedSegmentIndex+1)!
-        vc.player = PlayerInfo(name: "RYLEYRO", system:system, hash: nil)
-        
-        vc.navigationItem.title = "RYLEYRO"
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func presentDestinyViewController(player:PlayerInfo) -> Void {
-        //i'd much rather do this with a segue but I can't figure out how to name the fucking things in this version of xcode
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("DestinyViewController") as ViewController
-        vc.player = player
-        vc.navigationItem.title = player.displayName
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-       
-        if let lastPlayer = PlayerInfo.lastLoadedPlayer() {
-            //pre-populate the text field here or just auto-login
-            self.characterNameField.text = lastPlayer.displayName
-            self.systemSelector.selectedSegmentIndex = (lastPlayer.playerSystem.rawValue - 1)
-            self.loadButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside);
-            //we may want to in the future provide an auto-complete list of all entered players
-            //or something neato like that
+    //TODO: this should be a fancy inline thing with colors and * and auto-focusing and such
+    func loginValid() -> Bool {
+        if characterNameField.text == "" {
+            let alert = UIAlertView(title: "Name", message: "Please enter a character name.", delegate: self, cancelButtonTitle: "Okay")
+            alert.show()
+            return false
         }
+        
+        if systemSelector.selectedSegmentIndex < 0 {
+            characterNameField.layer.borderColor = UIColor.redColor().CGColor
+            return false
+        }
+        
+        return true
+    }
+    
+    func toggleLoadingUi(loading: Bool) -> Void {
+        loadButton.hidden = loading
+        activitySpinner.hidden = !loading
+        
+        loading ? activitySpinner.startAnimating() : activitySpinner.stopAnimating()
     }
 }

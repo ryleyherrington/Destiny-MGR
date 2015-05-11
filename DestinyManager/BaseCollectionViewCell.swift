@@ -19,19 +19,21 @@ class BaseCollectionViewCell: UICollectionViewCell{
         super.init(coder: aDecoder)
     }
     
-    let textLabel: UILabel!
+    var textLabel: UILabel! //makes errors go away, change back to let eventually
     let greenColor  = UIColor (red: 51.0/255.0, green: 102.0/255.0, blue: 0.0/255.0, alpha: 1)
     let orangeColor = UIColor (red: 255.0/255.0, green: 153.0/255.0, blue: 0.0/255.0, alpha: 1)
     let yellowColor = UIColor (red: 255.0/255.0, green: 204.0/255.0, blue: 0.0/255.0, alpha: 1)
     
     override init(frame: CGRect) {
+
+        textLabel = UILabel()
         super.init(frame: frame)
+        
         contentView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.75)
         
         let subHeight = frame.size.height/3
-        
         let textFrame = CGRect(x: 0, y: 0, width: frame.size.width, height: subHeight)
-        textLabel = UILabel(frame: textFrame)
+        textLabel.frame = textFrame
         textLabel.font = UIFont.systemFontOfSize(22.0)
         textLabel.textAlignment = .Center
         textLabel.textColor = UIColor.whiteColor()

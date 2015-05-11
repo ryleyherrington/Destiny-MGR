@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D5335011B014BF8006A7AAA /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5335001B014BF8006A7AAA /* ColorExtensions.swift */; };
 		4CC07A521A72F26300CACFE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC07A511A72F26300CACFE5 /* AppDelegate.swift */; };
 		4CC07A551A72F26300CACFE5 /* DestinyManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4CC07A531A72F26300CACFE5 /* DestinyManager.xcdatamodeld */; };
 		4CC07A5A1A72F26300CACFE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CC07A581A72F26300CACFE5 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D5335001B014BF8006A7AAA /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		4CC07A4C1A72F26300CACFE5 /* DestinyManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DestinyManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CC07A501A72F26300CACFE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CC07A511A72F26300CACFE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D5334FF1B014BD0006A7AAA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2D5335001B014BF8006A7AAA /* ColorExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		4CC07A431A72F26300CACFE5 = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +113,7 @@
 		4CC07A4E1A72F26300CACFE5 /* DestinyManager */ = {
 			isa = PBXGroup;
 			children = (
+				2D5334FF1B014BD0006A7AAA /* Extensions */,
 				4CC07A761A72F2CE00CACFE5 /* ViewControllers */,
 				4CC07A751A72F2C900CACFE5 /* Data */,
 				4CC07A741A72F2C100CACFE5 /* CustomUI */,
@@ -290,6 +301,7 @@
 				4CC07A881A72F39900CACFE5 /* LoginViewController.swift in Sources */,
 				4CC07A8D1A72F3A400CACFE5 /* BaseCollectionViewCell.swift in Sources */,
 				4CC07A821A72F38400CACFE5 /* PlayerInfo.swift in Sources */,
+				2D5335011B014BF8006A7AAA /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

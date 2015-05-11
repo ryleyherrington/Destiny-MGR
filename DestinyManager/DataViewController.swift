@@ -9,26 +9,67 @@
 import UIKit
 import CoreData
 
-class DataViewController: UIViewController , UICollectionViewDelegate, UICollectionViewDataSource{
+class DataViewController: UIViewController , UICollectionViewDelegate, UICollectionViewDataSource {
   
     var collectionView: UICollectionView?
     var dataObject: AnyObject?
-    var type: String?
+    var type: String? //TODO: this needs a better fucking name
     var topItems = [String]()
     var bottomItems = [String]()
     var activities = [Activity]()
     var completedActivities = [Activity]()
     
-    let greenColor  = UIColor (red: 51.0/255.0, green: 102.0/255.0, blue: 0.0/255.0, alpha: 1)
-    let orangeColor = UIColor (red: 255.0/255.0, green: 153.0/255.0, blue: 0.0/255.0, alpha: 1)
-    let yellowColor = UIColor (red: 255.0/255.0, green: 204.0/255.0, blue: 0.0/255.0, alpha: 1)
-
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 80, left: 10, bottom: 10, right: 10)
+        
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        //Half width
+        //let cellWidth = (screenSize.width/2-15)
+        
+        //full width
+        let cellWidth = (screenSize.width - 20)
+        let cellHeight = (screenSize.height/5)
+        
+        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
+        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        collectionView!.dataSource = self
+        collectionView!.delegate = self
+        collectionView!.registerClass(BaseCollectionViewCell.self, forCellWithReuseIdentifier: "BaseCollectionViewCell")
+        collectionView!.backgroundColor = UIColor.clearColor()
+        var backgroundImage:UIImage = UIImage(named: "stars.jpg")!
+        
+        let blurEffect = UIBlurEffect(style: .Light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        //        blurView.frame = backgroundImage
+        
+        self.view.backgroundColor = UIColor(patternImage: backgroundImage)
+        
+        self.view.addSubview(collectionView!)
+    }
+    
+    
+    override func viewDidAppear(animated: Bool) {
+        if (PlayerInfo.lastLoadedPlayer() == nil) {
+            //present the login view modally
+            let loginController = UIStoryboard(name: "Main",
+                bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier(LoginViewController.StoryboardIdentifier) as! LoginViewController
+            
+            presentViewController(loginController, animated: true, completion: nil)
+        } else {
+            //TODO: start the spinner and load our data
+            println("Load all our info here")
+            
+            loadData()
+        }
+    }
+    
+    func loadData() {
+        
         if type != nil {
-           // println("IN DATA \(type)")
             
             //initialize
             topItems = []
@@ -52,7 +93,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
                     "Exotic Chest",
                     "Gatekeepers",
                     "Atheon"
-                    ]
+                ]
                 
                 bottomItems = [
                     "Reg VOG CP",
@@ -73,7 +114,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
                     "2nd Chest",
                     "Deathsinger",
                     "Crota"
-                    ]
+                ]
                 
                 bottomItems = [
                     "Hard Crota CP",
@@ -87,44 +128,14 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
             }
         }
         
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 80, left: 10, bottom: 10, right: 10)
-        
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        //Half width
-        //let cellWidth = (screenSize.width/2-15)
-        
-        //full width
-        let cellWidth = (screenSize.width - 20)
-        let cellHeight = (screenSize.height/5)
-
-        
-        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
-        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        collectionView!.dataSource = self
-        collectionView!.delegate = self
-        collectionView!.registerClass(BaseCollectionViewCell.self, forCellWithReuseIdentifier: "BaseCollectionViewCell")
-        collectionView!.backgroundColor = UIColor.clearColor()
-        var backgroundImage:UIImage = UIImage(named: "stars.jpg")!
-       
-        let blurEffect = UIBlurEffect(style: .Light)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
-//        blurView.frame = backgroundImage
-        
-        self.view.backgroundColor = UIColor(patternImage: backgroundImage)
-        
-        self.view.addSubview(collectionView!)
-        
         getActivities()
-        
     }
    
     
     
     func getActivities(){
         //1
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         let managedContext = appDelegate.managedObjectContext!
         
@@ -182,7 +193,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     }
    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BaseCollectionViewCell", forIndexPath: indexPath) as BaseCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BaseCollectionViewCell", forIndexPath: indexPath) as! BaseCollectionViewCell
         if indexPath.section == 0 {
             cell.textLabel.text = self.topItems[indexPath.row]
         }else {
@@ -223,7 +234,7 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     func leftButtonAction(sender:CellButton!) {
         var button:CellButton = sender
         if (button.backgroundColor == UIColor .blackColor()){
-            button.backgroundColor = greenColor
+            button.backgroundColor = UIColor.DestinyGreen
             buttonPressed("LEFT", on: "NO", cell:button.cellName, row:button.row, section:button.section)
         } else{
             button.backgroundColor = UIColor .blackColor()
@@ -233,8 +244,8 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     
     func middleButtonAction(sender:CellButton!) {
         var button:CellButton = sender
-        if (button.backgroundColor == UIColor .blackColor()){
-            button.backgroundColor = orangeColor
+        if (button.backgroundColor == UIColor.blackColor()){
+            button.backgroundColor = UIColor.DestinyOrange
             buttonPressed("MIDDLE", on: "NO", cell:button.cellName, row:button.row, section:button.section)
         } else{
             button.backgroundColor = UIColor .blackColor()
@@ -244,11 +255,11 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     
     func rightButtonAction(sender:CellButton!) {
         var button:CellButton = sender
-        if (button.backgroundColor == UIColor .blackColor()){
-            button.backgroundColor = yellowColor
+        if (button.backgroundColor == UIColor.blackColor()){
+            button.backgroundColor = UIColor.DestinyGreen
             buttonPressed("RIGHT", on: "NO", cell:button.cellName, row:button.row, section:button.section)
         } else{
-            button.backgroundColor = UIColor .blackColor()
+            button.backgroundColor = UIColor.blackColor()
             buttonPressed("RIGHT", on: "YES", cell:button.cellName, row:button.row, section:button.section)
         }
     }
@@ -257,14 +268,14 @@ class DataViewController: UIViewController , UICollectionViewDelegate, UICollect
     func buttonPressed(button: NSString, on: NSString, cell:NSString, row:Int, section:Int) {
         
         //1 get references
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         let managedContext = appDelegate.managedObjectContext!
         
         //2
         let entity =  NSEntityDescription.entityForName("Activity", inManagedObjectContext: managedContext)
         
-        let activity = NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext) as Activity
+        let activity = NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext) as! Activity
         
         //3
         activity.setValue(cell, forKey: "name")
