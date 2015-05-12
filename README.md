@@ -3,6 +3,17 @@ This is for checking destiny weekly progress.
 emblemPath: "/common/destiny\_content/icons/88f5e8e11d3ea67acbbb63a5634ab056.jpg",
 backgroundPath: "/common/destiny\_content/icons/af3d162585bb98abb525d53ce4ef20e3.jpg",
 
+-----------------------------------------------------------------
+For completions:
+http://www.bungie.net/Platform/destiny/help/HelpDetail/GET?uri=Stats%2fActivityHistory%2f%7bmembershipType%7d%2f%7bdestinyMembershipId%7d%2f%7bcharacterId%7d%2f
+
+```Values: None, Story, Strike, Raid, AllPvP, Patrol, AllPvE, PvPIntroduction, ThreeVsThree, Control, Lockdown, Team, FreeForAll, Nightfall, Heroic, AllStrikes```
+
+Nightfall Check example:
+http://www.bungie.net/Platform/Destiny/Stats/ActivityHistory/2/4611686018428647294/2305843009253091199/?mode=Nightfall
+-----------------------------------------------------------------
+
+
 
 From:
 http://www.destinyrep.com/#un=ryleyro&t=2
