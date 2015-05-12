@@ -9,8 +9,8 @@ http://www.bungie.net/Platform/destiny/help/HelpDetail/GET?uri=Stats%2fActivityH
 
 ```Values: None, Story, Strike, Raid, AllPvP, Patrol, AllPvE, PvPIntroduction, ThreeVsThree, Control, Lockdown, Team, FreeForAll, Nightfall, Heroic, AllStrikes```
 
-Nightfall Check example:
-http://www.bungie.net/Platform/Destiny/Stats/ActivityHistory/2/4611686018428647294/2305843009253091199/?mode=Nightfall
+Nightfall Check example: http://www.bungie.net/Platform/Destiny/Stats/ActivityHistory/2/4611686018428647294/2305843009253091199/?mode=Nightfall
+
 -----------------------------------------------------------------
 
 
