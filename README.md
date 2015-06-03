@@ -94,3 +94,12 @@ http://www.destinyrep.com/#un=ryleyro&t=2
                 575572995: 'strike',
                 2043403989: 'raid'
             }
+
+
+Useful websites/calls: 
+https://www.bungie.net/platform/destiny/help/
+http://www.bungie.net/Platform/Destiny/TigerPSN/Account/4611686018428647294/
+http://www.bungie.net/platform/Destiny/TigerPSN/Account/4611686018429149347/Character/2305843009215132906/?definitions=true
+http://www.bungie.net/Platform/Destiny/TigerPSN/Account/4611686018428647294/Character/2305843009253091199/Progression/
+http://www.bungie.net/Platform/Destiny/Stats/ActivityHistory/2/4611686018428647294/2305843009253091199/?mode=AllStrikes
+http://www.bungie.net/Platform/Destiny/Stats/ActivityHistory/2/4611686018428647294/2305843009253091199/?mode=Nightfall
